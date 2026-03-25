@@ -59,5 +59,7 @@ then set the DTG register in your STM32 code like this:
 
 TIM1->BDTR = (TIM1->BDTR & ~0xFF) | (dtg_value & 0xFF);
 
+make sure to disable the main output before updating the DTG value to avoid any glitches in the output signal. 
+You can do this by clearing the MOE bit in the BDTR register, updating the DTG value, and then setting the MOE bit again to re-enable the main output.
 */
 
