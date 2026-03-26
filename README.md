@@ -188,7 +188,6 @@ void TIM1_SetDeadTime(uint8_t dtg)
 
 - Dead time is **quantized**, exact value may not always be achievable
 - Resolution decreases at higher dead times
-- Region 4 (0xC0–0xFF) contains **duplicate encodings**
 - LUT must be regenerated if:
     - Timer clock changes
     - Clock division changes
