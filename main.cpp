@@ -98,10 +98,10 @@ class DeadTimeCalculator {
     }
 }
    double get_resuolution_ns()
-    {
+    {    
         if (best.dtg <= 0x7F) return get_dts_ns();
-        else if (best.dtg <= 0x9F) return get_dts_ns() * 2;
-        else if (best.dtg <= 0xBF) return get_dts_ns() * 8;
+        else if (best.dtg > 0x7F && best.dtg  <= 0xBF) return get_dts_ns() * 2;
+        else if (best.dtg > 0xBF && best.dtg  <= 0xDF) return get_dts_ns() * 8;
         else return get_dts_ns() * 16;
     }
 };
@@ -151,7 +151,7 @@ int main() {
         std::cout<<"DTG = 0x"<<std::uppercase<<std::hex<<std::setw(2)<<std::setfill('0')<<(int)(dt_gen.best.dtg - 1)<<std::dec<<std::nouppercase
                  <<" -> Dead Time: "<<dt_gen.compute_dead_time(dt_gen.best.dtg - 1)<<" ns"<<std::endl;
     }
-    if(dt_gen.best.dtg < 127)
+    if(dt_gen.best.dtg < 255)
     {
         std::cout<<"DTG = 0x"<<std::uppercase<<std::hex<<std::setw(2)<<std::setfill('0')<<(int)(dt_gen.best.dtg + 1)<<std::dec<<std::nouppercase
                  <<" -> Dead Time: "<<dt_gen.compute_dead_time(dt_gen.best.dtg + 1)<<" ns"<<std::endl;
