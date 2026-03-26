@@ -41,16 +41,16 @@ class DeadTimeCalculator {
     }   
     double get_dts_ns()
     {
-        return (1000000000UL * (double)clock_division_factor) /(double)timer_clock_freq;
+        return ((double)1000000000UL * (double)clock_division_factor) /(double)timer_clock_freq;
     }
 
     double compute_dead_time(uint8_t dtg_value)
     {
     if (dtg_value <= 0x7F)
         return dtg_value * get_dts_ns();
-    else if (dtg_value <= 0x9F)
+    else if (dtg_value > 0x7F && dtg_value <= 0xBF)
         return (64 + (dtg_value & 0x3F)) * 2 * get_dts_ns();
-    else if (dtg_value <= 0xBF)
+    else if (dtg_value > 0xBF && dtg_value <= 0xDF)
         return (32 + (dtg_value & 0x1F)) * 8 * get_dts_ns();
     else
         return (32 + (dtg_value & 0x1F)) * 16 * get_dts_ns();
@@ -108,8 +108,7 @@ class DeadTimeCalculator {
 
 int main() {
 
-    //list_possible(125);
-
+ 
     DeadTimeCalculator dt_gen;
     MainMenu:
     std::cout<<"Select mode: "<<std::endl;
@@ -215,16 +214,6 @@ int main() {
     return 0;
 }
 
-
-
-
-void list_possible(double dt_step)
-{
-    for(int i = 0 ; i < 128 ; i++)
-    {
-        std::cout<< (float)i *125<<std::endl;
-    }
-}
 
 
 std::string get_region(uint8_t dtg)
